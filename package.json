@@ -1,0 +1,24 @@
+{
+  "name": "mycanvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	"backend": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://6d8b91da29f40db2f7a400d88edcf57f6f98871a@github.com/fheldtm/myCanvas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fheldtm/myCanvas/issues"
+  },
+  "homepage": "https://github.com/fheldtm/myCanvas#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  }
+}
