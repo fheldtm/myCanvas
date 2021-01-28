@@ -27,8 +27,10 @@ export class Box {
 	}
 	
 	resize(stageWidth, stageHeight) {
-		console.log('aa');
 		this.boxSpeedY(stageHeight);
+		if(this.x + this.boxWidth > stageWidth) {
+			this.x = stageWidth - this.boxWidth;
+		}
 	}
 	
 	boxSpeedY(stageHeight) {
@@ -37,9 +39,12 @@ export class Box {
 			this.y = stageHeight - this.boxHeight;
 		} else {
 			if(this.speed == 0) {
-				this.speed = 0.1;
+				this.speed = 0.0001;
+				this.firstY = this.y;
+				console.log(this.speed);
 			} else {
 				this.speed = Math.sqrt(2 * this.gravity * (this.y - this.firstY));
+				console.log(this.speed);
 			}
 		}
 	}

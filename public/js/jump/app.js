@@ -12,12 +12,16 @@ class App {
 		this.stageWidth = document.body.clientWidth;
 		this.stageHeight = document.body.clientHeight;
 		this.box = new Box(this.stageWidth, this.stageHeight, 30, 20);
+
+		this.keydown_check = false;
+		window.addEventListener("keydown", this.keyDown.bind(this), false);
+		window.addEventListener("keyup", this.keyUp.bind(this), false);
 		
 		this.resize();
 		window.addEventListener('resize', this.resize.bind(this), false);
 		
-		// window.requestAnimationFrame(this.animate.bind(this));
-		this.animate();
+		window.requestAnimationFrame(this.animate.bind(this));
+		// this.animate();
 	}
 	
 	resize() {
@@ -32,13 +36,27 @@ class App {
 	}
 	
 	animate(t) {
-		// window.requestAnimationFrame(this.animate.bind(this));
+		window.requestAnimationFrame(this.animate.bind(this));
 		
 		this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 		
 		this.box.draw(this.ctx, this.stageWidth, this.stageHeight);
-		
-		setTimeout(this.animate.bind(this), this.FPS);
+
+		// setTimeout(this.animate.bind(this), this.FPS);
+	}
+
+	keyDown(e) {
+		e.preventDefault();
+		if(this.keydown_check == false && e.keyCode == 32) {
+			this.keydown_check = true;
+		}
+	}
+
+	keyUp(e) {
+		e.preventDefault();
+		if(this.keydown_check == true) {
+			this.keydown_check = false;
+		}
 	}
 }
 
