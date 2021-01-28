@@ -21,7 +21,7 @@ export class Box {
 		ctx.beginPath();
 		ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
 		ctx.shadowBlur = 5;
-		ctx.shadowOffsetX = 1
+		ctx.shadowOffsetX = 1;
 		ctx.shadowOffsetY = 2;
 		ctx.fillRect(this.x, this.y, this.boxWidth, this.boxHeight);
 	}
