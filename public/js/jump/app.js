@@ -7,13 +7,15 @@ class App {
 		document.body.appendChild(this.canvas);
 		this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
 
-		this.FPS = 1000/60;
+		// this.FPS = 1000/60;
 		
 		this.stageWidth = document.body.clientWidth;
 		this.stageHeight = document.body.clientHeight;
 		this.box = new Box(this.stageWidth, this.stageHeight, 30, 20);
 
 		this.keydown_check = false;
+		this.x_check = false;
+
 		window.addEventListener("keypress", this.keyDown.bind(this), false);
 		window.addEventListener("keyup", this.keyUp.bind(this), false);
 		
@@ -47,20 +49,28 @@ class App {
 
 	keyDown(e) {
 		e.preventDefault();
-		if(this.keydown_check == false) {
-			switch(e.keyCode) {
-				case 32:
-					this.keydown_check = true;
-					this.box.jump();
-					break;
-			}
+		this.x_check = true;
+		this.box.passXCheck(this.x_check);
+
+		if(this.keydown_check == false && e.keyCode == 32) { // 스페이스바 = 점프
+			this.keydown_check = true;
+			this.box.jump();
+		} else if(e.keyCode == 106) {
+			this.box.leftMove(); // 왼쪽 J Key
+		} else if(e.keyCode == 108) {
+			this.box.rightMove(); // 오른쪽 L Key
 		}
 	}
 
 	keyUp(e) {
 		e.preventDefault();
-		if(this.keydown_check == true) {
-			this.keydown_check = false;
+		if(e.keyCode == 74 || e.keyCode == 76) {
+			this.x_check = false;
+			this.box.passXCheck(this.x_check);
+		}
+
+		if(e.keyCode == 32) {
+			if(this.keydown_check == true) this.keydown_check = false;
 		}
 	}
 }
