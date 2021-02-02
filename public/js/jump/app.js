@@ -47,9 +47,13 @@ class App {
 
 	keyDown(e) {
 		e.preventDefault();
-		if(this.keydown_check == false && e.keyCode == 32) {
-			this.keydown_check = true;
-			this.box.jump();
+		if(this.keydown_check == false) {
+			switch(e.keyCode) {
+				case 32:
+					this.keydown_check = true;
+					this.box.jump();
+					break;
+			}
 		}
 	}
 
