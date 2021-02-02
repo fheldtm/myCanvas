@@ -13,7 +13,8 @@ export class Box {
 		this.leftPlus = 1.1;
 		this.gravity = 2.0;
 
-		this.x_check = false;
+		this.left_check = false;
+		this.right_check = false;
 		
 		this.x = Math.random() * (this.stageWidth - this.boxWidth);
 		this.y = Math.random() * (this.stageHeight - this.boxHeight);
@@ -29,11 +30,14 @@ export class Box {
 			this.y += this.speed;
 		}
 
-		if(!this.x_check) {
+		if((!this.left_check) && (!this.right_check)) {
 			this.speedX *= 0.8;
-			this.rightPlus = 1.1;
-			this.leftPlus = 1.1;
+		} else if(!this.left_check) { 
+			this.leftPlus = 1.001; 
+		} else if(!this.right_check) {
+			this.rightPlus = 1.001;
 		}
+
 		if(this.speedX > 10) {
 			this.speedX = 10;
 		} else if(this.speedX < -10) {
@@ -87,34 +91,47 @@ export class Box {
 	boxUp() {
 		if(this.speed >= 0) {
 			jumpTime = false;
-		} else if(this.speed < 0) {
-			this.speed += 3.0;
+		} else if(this.speed <= 0) {
+			this.speed += 2.0;
 		}
 	}
 
 	jump() {
 		if(jumpStack < 2) {
-			this.speed = -30;
+			this.speed = -40.0;
 		}
 		jumpStack++;
 		jumpTime = true;
 	}
 
 	rightMove() {
-		if(this.x_check) {
-			this.rightPlus *= 2.1;
+		if(this.right_check) {
+			if(this.speedX < -9) {
+				this.speedX += 8.0;	
+			} else {
+				this.rightPlus *= 1.1;
+			}
 			this.speedX += this.rightPlus;
 		}
 	}
 
 	leftMove() {
-		if(this.x_check) {
-			this.leftPlus *= 2.1;
+		if(this.left_check) {
+			if(this.speedX > 9) {
+				this.speedX -= 8.0;
+			} else {
+				this.leftPlus *= 1.1;
+			}
 			this.speedX -= this.leftPlus;
 		}
 	}
 
-	passXCheck(x_check) {
-		this.x_check = x_check;
+	stop() {
+		this.speedX *= 0.5;
+	}
+
+	passXCheck(left_check, right_check) {
+		this.left_check = left_check;
+		this.right_check = right_check;
 	}
 }
