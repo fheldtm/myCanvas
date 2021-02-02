@@ -11,7 +11,7 @@ class App {
 		
 		this.stageWidth = document.body.clientWidth;
 		this.stageHeight = document.body.clientHeight;
-		this.box = new Box(this.stageWidth, this.stageHeight, 50, 35);
+		this.box = new Box(this.stageWidth, this.stageHeight, 30, 20);
 
 		this.keydown_check = false;
 		this.left_check = false;

@@ -1,6 +1,9 @@
 let jumpTime = false;
 let jumpStack = 2;
 
+const MAX_SPEED = 30;
+const ACCEL = 1.1;
+
 export class Box {
 	constructor(stageWidth, stageHeight, boxWidth, boxHeight) {
 		this.stageWidth = stageWidth;
@@ -9,8 +12,8 @@ export class Box {
 		this.boxHeight = boxHeight
 		this.speed = 0;
 		this.speedX = 0.0;
-		this.rightPlus = 1.1;
-		this.leftPlus = 1.1;
+		this.rightPlus = 0.3;
+		this.leftPlus = 0.3;
 		this.gravity = 2.0;
 
 		this.left_check = false;
@@ -31,17 +34,19 @@ export class Box {
 		}
 
 		if((!this.left_check) && (!this.right_check)) {
-			this.speedX *= 0.95;
+			this.speedX *= 0.98;
+			this.leftPlus = 0.3;
+			this.rightPlus = 0.3;
 		} else if(!this.left_check) { 
-			this.leftPlus = 1.001; 
+			this.leftPlus = 0.3; 
 		} else if(!this.right_check) {
-			this.rightPlus = 1.001;
+			this.rightPlus = 0.3;
 		}
 
-		if(this.speedX > 10) {
-			this.speedX = 10;
-		} else if(this.speedX < -10) {
-			this.speedX = -10;
+		if(this.speedX > MAX_SPEED) {
+			this.speedX = MAX_SPEED;
+		} else if(this.speedX < -MAX_SPEED) {
+			this.speedX = -MAX_SPEED;
 		}
 		this.x += this.speedX;
 
@@ -64,9 +69,13 @@ export class Box {
 	checkInsideBox(stageWidth) {
 		if(this.x + this.boxWidth > stageWidth) { // 오른쪽 기준
 			this.x = stageWidth - this.boxWidth;
+			this.rightPlus = 0.3;
+			this.speedX = -this.speedX * 0.8;
 		} 
 		if(this.x <= 0) {
 			this.x = 0;
+			this.leftPlus = 0.3;
+			this.speedX = -this.speedX * 0.8;
 		} 
 		if(this.y <= 0) {
 			this.y = 0;
@@ -109,7 +118,7 @@ export class Box {
 			if(this.speedX < -9) {
 				this.speedX += 8.0;	
 			} else {
-				this.rightPlus *= 1.1;
+				this.rightPlus *= ACCEL;
 			}
 			this.speedX += this.rightPlus;
 		}
@@ -120,7 +129,7 @@ export class Box {
 			if(this.speedX > 9) {
 				this.speedX -= 8.0;
 			} else {
-				this.leftPlus *= 1.1;
+				this.leftPlus *= ACCEL;
 			}
 			this.speedX -= this.leftPlus;
 		}
@@ -128,6 +137,8 @@ export class Box {
 
 	stop() {
 		this.speedX *= 0.5;
+		this.leftPlus = 1.01;
+		this.rightPlus = 1.01;
 	}
 
 	passXCheck(left_check, right_check) {
