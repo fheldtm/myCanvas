@@ -31,7 +31,7 @@ export class Box {
 		}
 
 		if((!this.left_check) && (!this.right_check)) {
-			this.speedX *= 0.8;
+			this.speedX *= 0.95;
 		} else if(!this.left_check) { 
 			this.leftPlus = 1.001; 
 		} else if(!this.right_check) {
