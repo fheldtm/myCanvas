@@ -49,6 +49,7 @@ class App {
 		e.preventDefault();
 		if(this.keydown_check == false && e.keyCode == 32) {
 			this.keydown_check = true;
+			this.box.jump();
 		}
 	}
 

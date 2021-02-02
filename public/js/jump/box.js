@@ -19,10 +19,9 @@ export class Box {
 			this.boxDown(stageHeight);
 			this.y += this.speed;
 		} else {
-			this.boxUp(stageHeight);
+			this.boxUp();
 			this.y += this.speed;
 		}
-		console.log(this.speed, this.y);
 
 		ctx.fillStyle = '#ffc300';
 		ctx.beginPath();
@@ -54,11 +53,11 @@ export class Box {
 		}
 	}
 
-	boxUp(stageHeight) {
+	boxUp() {
 		if(this.speed >= 0) {
 			jumpTime = false;
 		} else if(this.speed < 0) {
-			this.speed += 2;
+			this.speed += 2.0;
 		}
 	}
 
