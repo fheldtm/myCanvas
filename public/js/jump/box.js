@@ -1,3 +1,5 @@
+let jumpTime = false;
+
 export class Box {
 	constructor(stageWidth, stageHeight, boxWidth, boxHeight) {
 		this.stageWidth = stageWidth;
@@ -13,10 +15,15 @@ export class Box {
 	}
 	
 	draw(ctx, stageWidth, stageHeight) {
-		this.boxSpeedY(stageHeight);
-		this.y += this.speed;
-		// console.log(this.speed, this.y);
-		
+		if(!jumpTime) {
+			this.boxDown(stageHeight);
+			this.y += this.speed;
+		} else {
+			this.boxUp(stageHeight);
+			this.y += this.speed;
+		}
+		console.log(this.speed, this.y);
+
 		ctx.fillStyle = '#ffc300';
 		ctx.beginPath();
 		ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
@@ -27,25 +34,36 @@ export class Box {
 	}
 	
 	resize(stageWidth, stageHeight) {
-		this.boxSpeedY(stageHeight);
+		this.boxDown(stageHeight);
 		if(this.x + this.boxWidth > stageWidth) {
 			this.x = stageWidth - this.boxWidth;
 		}
 	}
 	
-	boxSpeedY(stageHeight) {
+	boxDown(stageHeight) {
 		if(this.y + this.boxHeight >= stageHeight) {
 			this.speed = 0;
 			this.y = stageHeight - this.boxHeight;
 		} else {
 			if(this.speed == 0) {
-				this.speed = 0.0001;
+				this.speed = 0.001;
 				this.firstY = this.y;
-				console.log(this.speed);
 			} else {
 				this.speed = Math.sqrt(2 * this.gravity * (this.y - this.firstY));
-				console.log(this.speed);
 			}
 		}
+	}
+
+	boxUp(stageHeight) {
+		if(this.speed >= 0) {
+			jumpTime = false;
+		} else if(this.speed < 0) {
+			this.speed += 2;
+		}
+	}
+
+	jump() {
+		this.speed = -20;
+		jumpTime = true;
 	}
 }

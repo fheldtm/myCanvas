@@ -14,7 +14,7 @@ class App {
 		this.box = new Box(this.stageWidth, this.stageHeight, 30, 20);
 
 		this.keydown_check = false;
-		window.addEventListener("keydown", this.keyDown.bind(this), false);
+		window.addEventListener("keypress", this.keyDown.bind(this), false);
 		window.addEventListener("keyup", this.keyUp.bind(this), false);
 		
 		this.resize();
